@@ -1,7 +1,8 @@
-package com.dvidal.samplereviews
+package com.dvidal.samplereviews.features
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.dvidal.samplereviews.R
 
 class MainActivity : AppCompatActivity() {
 

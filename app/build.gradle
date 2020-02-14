@@ -18,8 +18,8 @@ android {
         versionName config["version_name"]
         testInstrumentationRunner config["test_runner"]
 
-        buildConfigField "String", "API_ENDPOINT", "\"https://api-mobile.home24.com/api/v2.0/\""
-        buildConfigField "int", "NUM_ARTICLES", "16"
+        buildConfigField "String", "API_ENDPOINT", "\"https://travelers-api.getyourguide.com/\""
+        buildConfigField "int", "LIMIT_REVIEWS", "5"
     }
 
     buildTypes {
