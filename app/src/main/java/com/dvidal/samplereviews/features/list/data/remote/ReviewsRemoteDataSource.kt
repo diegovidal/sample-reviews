@@ -8,5 +8,5 @@ import com.dvidal.samplereviews.features.list.presentation.ReviewsPageView
  */
 interface ReviewsRemoteDataSource {
 
-    suspend fun fetchReviews(limit: Int, offset: Int = 0, sort: String = "date:desc"): EitherResult<ReviewsPageView>
+    suspend fun fetchReviews(limit: Int, offset: Int = 0): EitherResult<ReviewsPageView>
 }

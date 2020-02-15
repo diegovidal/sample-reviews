@@ -20,8 +20,6 @@ class ReviewsRemoteDataSourceTest {
     private val remoteApi = mockk<RemoteApi>()
     private val networkHandler = mockk<NetworkHandler>()
 
-    private val mockRemoteResponse = ReviewsRemoteResponse.empty()
-
     private lateinit var remoteDataSource: ReviewsRemoteDataSource
 
     @Before
@@ -32,15 +30,15 @@ class ReviewsRemoteDataSourceTest {
     }
 
     @Test
-    fun `when fetch reviews should return and call remoteApi fetch reviews`() = runBlocking {
+    fun `when fetch reviews should call remoteApi fetch reviews and return a ReviewPageView`() = runBlocking {
 
         val limitReviews = 5
 
         val remoteResponse = ReviewsRemoteResponse.empty()
-        coEvery { remoteApi.fetchReviews(limitReviews) } returns mockRemoteResponse
+        coEvery { remoteApi.fetchReviews(limitReviews) } returns remoteResponse
 
-        val expectedRemoteResponse = remoteDataSource.fetchReviews(limitReviews).rightOrNull()
+        val reviewsPageView = remoteDataSource.fetchReviews(limitReviews).rightOrNull()
         coVerify(exactly = 1) {remoteApi.fetchReviews(limitReviews)}
-        assertEquals(expectedRemoteResponse, remoteResponse)
+        assertEquals(remoteResponse.mapperToReviewsPageView(), reviewsPageView)
     }
 }
