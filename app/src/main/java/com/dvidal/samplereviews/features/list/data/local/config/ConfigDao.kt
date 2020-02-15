@@ -16,8 +16,11 @@ interface ConfigDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addConfig(configDto: ConfigDto)
 
-    @Query("SELECT * FROM configdto")
+    @Query("SELECT * FROM configdto WHERE -1 LIMIT 1")
     fun fetchConfig(): LiveData<ConfigDto>
+
+    @Query("UPDATE configdto SET offsetPage = offsetPage + 1 WHERE id = -1")
+    suspend fun incrementOffsetPage()
 
     @Query("DELETE FROM configdto")
     suspend fun clearConfig()

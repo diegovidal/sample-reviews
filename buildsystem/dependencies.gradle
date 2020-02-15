@@ -27,6 +27,7 @@ ext {
     // Unit Testing
     junit_version = "4.12"
     mockk_version = "1.9.3"
+    roboletric_version = "4.3.1"
 
     // Integration Testing
     extJunit_version = "1.1.1"
@@ -60,7 +61,8 @@ ext {
 
             junit:          "junit:junit:$junit_version",
             mockk:          "io.mockk:mockk:$mockk_version",
-            archCore:       "androidx.arch.core:core-testing:$archCore_version"
+            archCore:       "androidx.arch.core:core-testing:$archCore_version",
+            robolectric:    "org.robolectric:robolectric:$roboletric_version"
     ]
 
     integrationTesting = [

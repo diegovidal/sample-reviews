@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ConfigDto(
-    @PrimaryKey val id: Long = -1,
+    @PrimaryKey var id: Long = -1,
     val activityName: String = "",
     val offsetPage: Int = 0,
     val numReviews: Int = 0,
