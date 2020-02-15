@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.dvidal.samplereviews.core.datasource.local.AppDatabase
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -38,7 +39,7 @@ class ConfigLocalDataSourceImplTest {
 
         val dummyConfigDto = ConfigDto()
         val dummyLiveData = MutableLiveData(dummyConfigDto)
-        coEvery { appDatabase.configDao().fetchConfig() } returns dummyLiveData
+        every { appDatabase.configDao().fetchConfig() } returns dummyLiveData
 
         dataSource.fetchConfig()
         coVerify(exactly = 1) { appDatabase.configDao().fetchConfig() }

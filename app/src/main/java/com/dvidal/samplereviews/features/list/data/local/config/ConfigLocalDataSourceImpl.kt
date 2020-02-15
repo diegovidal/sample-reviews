@@ -20,7 +20,7 @@ class ConfigLocalDataSourceImpl @Inject constructor(
         return catching { appDatabase.configDao().insertConfig(configDto) }
     }
 
-    override suspend fun fetchConfig(): EitherResult<LiveData<ConfigDto>> {
+    override fun fetchConfig(): EitherResult<LiveData<ConfigDto>> {
         return catching { appDatabase.configDao().fetchConfig() }
     }
 
