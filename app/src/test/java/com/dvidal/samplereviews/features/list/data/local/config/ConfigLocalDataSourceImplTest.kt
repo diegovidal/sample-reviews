@@ -29,7 +29,7 @@ class ConfigLocalDataSourceImplTest {
         val dummyConfigDto = ConfigDto()
         coEvery { appDatabase.configDao().insertConfig(dummyConfigDto) } returns Unit
 
-        dataSource.insertConfig(dummyConfigDto)
+        dataSource.insertConfig(dummyConfigDto.activityName, dummyConfigDto.numReviews, dummyConfigDto.averageRating)
         coVerify(exactly = 1) { appDatabase.configDao().insertConfig(dummyConfigDto) }
     }
 

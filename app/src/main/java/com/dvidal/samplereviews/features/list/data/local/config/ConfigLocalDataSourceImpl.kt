@@ -13,7 +13,10 @@ class ConfigLocalDataSourceImpl @Inject constructor(
     private val appDatabase: AppDatabase
 ): ConfigLocalDataSource {
 
-    override suspend fun insertConfig(configDto: ConfigDto): EitherResult<Unit> {
+
+
+    override suspend fun insertConfig(activityName: String, numReviews: Int, averageRating: Double): EitherResult<Unit> {
+        val configDto = ConfigDto(activityName = activityName, numReviews = numReviews, averageRating = averageRating)
         return catching { appDatabase.configDao().insertConfig(configDto) }
     }
 
