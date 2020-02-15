@@ -24,7 +24,7 @@ class ReviewsDaoTest {
     @JvmField
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val database = Room.inMemoryDatabaseBuilder(
+    private val appDatabase = Room.inMemoryDatabaseBuilder(
         RuntimeEnvironment.systemContext,
         AppDatabase::class.java
     )
@@ -33,16 +33,16 @@ class ReviewsDaoTest {
 
     @After
     fun closeDb() {
-        database.close()
+        appDatabase.close()
     }
 
     @Test
     fun `when add reviews should return reviews`() = runBlocking {
 
         val dummyReviewsDto = listOf(ReviewDto(id = 100), ReviewDto(id = 101))
-        database.reviewsDao().insertAllReviews(dummyReviewsDto)
+        appDatabase.reviewsDao().insertAllReviews(dummyReviewsDto)
 
-        val reviewsDto = database.reviewsDao().fetchReviews()
+        val reviewsDto = appDatabase.reviewsDao().fetchReviews()
         assertEquals(2, reviewsDto.getOrAwaitValue().size)
     }
 
@@ -50,13 +50,13 @@ class ReviewsDaoTest {
     fun `when add and clear reviews should return nothing`() = runBlocking {
 
         val dummyReviewsDto = listOf(ReviewDto(id = 100), ReviewDto(id = 101))
-        database.reviewsDao().insertAllReviews(dummyReviewsDto)
+        appDatabase.reviewsDao().insertAllReviews(dummyReviewsDto)
 
-        var reviewsDto = database.reviewsDao().fetchReviews()
+        var reviewsDto = appDatabase.reviewsDao().fetchReviews()
         assertEquals(2, reviewsDto.getOrAwaitValue().size)
 
-        database.reviewsDao().clearReviews()
-        reviewsDto = database.reviewsDao().fetchReviews()
+        appDatabase.reviewsDao().clearReviews()
+        reviewsDto = appDatabase.reviewsDao().fetchReviews()
         assertEquals(0, reviewsDto.getOrAwaitValue().size)
 
     }

@@ -22,6 +22,9 @@ interface ConfigDao {
     @Query("UPDATE configdto SET offsetPage = offsetPage + 1 WHERE id = -1")
     suspend fun incrementOffsetPage()
 
+    @Query("UPDATE configdto SET isDescendingOrderRating = NOT isDescendingOrderRating WHERE id = -1")
+    suspend fun toggleSortByRating()
+
     @Query("DELETE FROM configdto")
     suspend fun clearConfig()
 }

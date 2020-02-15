@@ -25,7 +25,7 @@ class ConfigDaoTest {
     @JvmField
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val database = Room.inMemoryDatabaseBuilder(
+    private val appDatabase = Room.inMemoryDatabaseBuilder(
         RuntimeEnvironment.systemContext,
         AppDatabase::class.java
     )
@@ -34,7 +34,7 @@ class ConfigDaoTest {
 
     @After
     fun closeDb() {
-        database.close()
+        appDatabase.close()
     }
 
     @Test
@@ -42,8 +42,8 @@ class ConfigDaoTest {
 
         val dummyConfigDto = ConfigDto()
 
-        database.configDao().insertConfig(dummyConfigDto)
-        val configDto = database.configDao().fetchConfig()
+        appDatabase.configDao().insertConfig(dummyConfigDto)
+        val configDto = appDatabase.configDao().fetchConfig()
         assertEquals(dummyConfigDto, configDto.getOrAwaitValue())
     }
 
@@ -52,12 +52,12 @@ class ConfigDaoTest {
 
         val dummyConfigDto = ConfigDto()
 
-        database.configDao().insertConfig(dummyConfigDto)
-        var configDto = database.configDao().fetchConfig()
+        appDatabase.configDao().insertConfig(dummyConfigDto)
+        var configDto = appDatabase.configDao().fetchConfig()
         assertEquals(dummyConfigDto, configDto.getOrAwaitValue())
 
-        database.configDao().clearConfig()
-        configDto = database.configDao().fetchConfig()
+        appDatabase.configDao().clearConfig()
+        configDto = appDatabase.configDao().fetchConfig()
         assertEquals(null, configDto.getOrAwaitValue())
     }
 
@@ -66,11 +66,25 @@ class ConfigDaoTest {
 
         val dummyConfigDto = ConfigDto()
 
-        database.configDao().insertConfig(dummyConfigDto)
-        val configDto = database.configDao().fetchConfig()
+        appDatabase.configDao().insertConfig(dummyConfigDto)
+        val configDto = appDatabase.configDao().fetchConfig()
         assertEquals(0, configDto.getOrAwaitValue().offsetPage)
 
-        repeat(2) {database.configDao().incrementOffsetPage()}
+        repeat(2) {appDatabase.configDao().incrementOffsetPage()}
         assertEquals(2, configDto.getOrAwaitValue().offsetPage)
+    }
+
+    @Test
+    fun `when toggle sort by rating should return false`() = runBlocking {
+
+        val dummyConfigDto = ConfigDto()
+
+        appDatabase.configDao().insertConfig(dummyConfigDto)
+        var configDto = appDatabase.configDao().fetchConfig()
+        assertEquals(true, configDto.getOrAwaitValue().isDescendingOrderRating)
+
+        appDatabase.configDao().toggleSortByRating()
+        configDto = appDatabase.configDao().fetchConfig()
+        assertEquals(false, configDto.getOrAwaitValue().isDescendingOrderRating)
     }
 }

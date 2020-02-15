@@ -14,5 +14,5 @@ data class ConfigDto(
     val offsetPage: Int = 0,
     val numReviews: Int = 0,
     val averageRating: Float = 0.0F,
-    val isDescendingOrder: Boolean = true
+    val isDescendingOrderRating: Boolean = true
 )
