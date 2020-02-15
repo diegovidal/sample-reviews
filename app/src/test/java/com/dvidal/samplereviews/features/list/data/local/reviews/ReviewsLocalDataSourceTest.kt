@@ -31,7 +31,6 @@ class ReviewsLocalDataSourceTest {
 
         dataSource.insertAllReviews(dummyReviewsDto)
         coVerify(exactly = 1) { appDatabase.reviewsDao().insertAllReviews(dummyReviewsDto) }
-
     }
 
     @Test
