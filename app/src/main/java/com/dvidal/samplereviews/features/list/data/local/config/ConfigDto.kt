@@ -13,6 +13,6 @@ data class ConfigDto(
     val activityName: String = "",
     val offsetPage: Int = 0,
     val numReviews: Int = 0,
-    val averageRating: Float = 0.0F,
+    val averageRating: Double = 0.0,
     val isDescendingOrderRating: Boolean = true
 )
