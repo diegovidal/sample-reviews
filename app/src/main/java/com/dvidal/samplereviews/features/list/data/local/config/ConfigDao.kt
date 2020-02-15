@@ -14,7 +14,7 @@ import androidx.room.Query
 interface ConfigDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addConfig(configDto: ConfigDto)
+    suspend fun insertConfig(configDto: ConfigDto)
 
     @Query("SELECT * FROM configdto WHERE -1 LIMIT 1")
     fun fetchConfig(): LiveData<ConfigDto>

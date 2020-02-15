@@ -19,7 +19,7 @@ import org.robolectric.RuntimeEnvironment
  */
 
 @RunWith(RobolectricTestRunner::class)
-class ConfigDaoUnitTest {
+class ConfigDaoTest {
 
     @Rule
     @JvmField
@@ -42,7 +42,7 @@ class ConfigDaoUnitTest {
 
         val dummyConfigDto = ConfigDto()
 
-        database.configDao().addConfig(dummyConfigDto)
+        database.configDao().insertConfig(dummyConfigDto)
         val configDto = database.configDao().fetchConfig()
         assertEquals(dummyConfigDto, configDto.getOrAwaitValue())
     }
@@ -52,7 +52,7 @@ class ConfigDaoUnitTest {
 
         val dummyConfigDto = ConfigDto()
 
-        database.configDao().addConfig(dummyConfigDto)
+        database.configDao().insertConfig(dummyConfigDto)
         var configDto = database.configDao().fetchConfig()
         assertEquals(dummyConfigDto, configDto.getOrAwaitValue())
 
@@ -66,7 +66,7 @@ class ConfigDaoUnitTest {
 
         val dummyConfigDto = ConfigDto()
 
-        database.configDao().addConfig(dummyConfigDto)
+        database.configDao().insertConfig(dummyConfigDto)
         val configDto = database.configDao().fetchConfig()
         assertEquals(0, configDto.getOrAwaitValue().offsetPage)
 
