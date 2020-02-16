@@ -1,7 +1,15 @@
 package com.dvidal.samplereviews.features.list.domain.usecases
 
+import com.dvidal.samplereviews.features.list.domain.ReviewsRepository
+import dagger.Reusable
+import javax.inject.Inject
+
 /**
  * @author diegovidal on 2020-02-16.
  */
-class ToggleSortByRatingUseCase {
+
+@Reusable
+class ToggleSortByRatingUseCase @Inject constructor(
+    private val repository: ReviewsRepository
+){
 }
