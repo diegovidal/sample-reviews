@@ -1,6 +1,10 @@
 package com.dvidal.samplereviews.core.di.component
 
 import com.dvidal.samplereviews.core.di.module.ApplicationModule
+import com.dvidal.samplereviews.core.di.module.DatabaseModule
+import com.dvidal.samplereviews.core.di.module.RemoteModule
+import com.dvidal.samplereviews.core.di.module.RepositoryModule
+import com.dvidal.samplereviews.core.di.module.viewmodel.ViewModelModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -9,8 +13,13 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = [
-    ApplicationModule::class
+    ApplicationModule::class,
+    DatabaseModule::class,
+    RemoteModule::class,
+    RepositoryModule::class,
+    ViewModelModule::class
 ])
 interface AppComponent {
 
+    fun activityComponent(): ActivityComponent.Builder
 }
