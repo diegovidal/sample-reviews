@@ -15,7 +15,7 @@ import com.squareup.moshi.Json
 
 data class ReviewsRemoteResponse(
 
-    @Json(name = "reviews") val reviews: List<ReviewRemote>,
+    @Json(name = "reviews") var reviews: List<ReviewRemote>,
     @Json(name = "totalCount") val totalCount: Int,
     @Json(name = "averageRating") val averageRating: Double,
     @Json(name = "pagination") val pagination: PaginationRemote
@@ -26,6 +26,11 @@ data class ReviewsRemoteResponse(
         totalCount = this.totalCount,
         averageRating = this.averageRating,
         pagination = this.pagination.mapperToPaginationView()
+    )
+
+    fun mapperToConfigDto() = ConfigDto(
+        numReviews = this.totalCount,
+        averageRating = this.averageRating
     )
 
     companion object {
@@ -81,6 +86,22 @@ data class ReviewRemote(
         createdDate = this.created,
         travelerType = this.travelerType
     )
+
+    companion object {
+
+        fun empty() = ReviewRemote(
+            id = -1,
+            author = AuthorRemote.empty(),
+            title = "",
+            message = "",
+            enjoyment = "",
+            isAnonymous = false,
+            rating = -1,
+            created = "",
+            language = "",
+            travelerType = ""
+        )
+    }
 }
 
 data class AuthorRemote(
@@ -97,6 +118,16 @@ data class AuthorRemote(
         city = this.city,
         photo = this.photo
     )
+
+    companion object {
+
+        fun empty() = AuthorRemote(
+            fullName = "",
+            country = "",
+            city = "",
+            photo = ""
+        )
+    }
 }
 
 data class PaginationRemote(

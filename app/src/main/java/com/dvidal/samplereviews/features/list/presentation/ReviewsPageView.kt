@@ -16,11 +16,6 @@ data class ReviewsPageView(
     val pagination: PaginationView
 ) {
 
-    fun mapperToConfigDto() = ConfigDto(
-        numReviews = this.totalCount,
-        averageRating = this.averageRating
-    )
-
     companion object {
         fun empty() = ReviewsPageView(
             reviews = emptyList(),

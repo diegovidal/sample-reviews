@@ -8,14 +8,14 @@ import com.dvidal.samplereviews.features.list.data.local.config.ConfigDto
 import com.dvidal.samplereviews.features.list.data.local.config.ConfigLocalDataSource
 import com.dvidal.samplereviews.features.list.data.local.reviews.ReviewDto
 import com.dvidal.samplereviews.features.list.data.local.reviews.ReviewsLocalDataSource
+import com.dvidal.samplereviews.features.list.data.remote.ReviewRemote
 import com.dvidal.samplereviews.features.list.data.remote.ReviewsRemoteDataSource
-import com.dvidal.samplereviews.features.list.presentation.ReviewsPageView
+import com.dvidal.samplereviews.features.list.data.remote.ReviewsRemoteResponse
 import com.dvidal.samplereviews.utils.getOrAwaitValue
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -89,16 +89,51 @@ class ReviewsRepositoryTest {
         }
 
     @Test
-    fun `when request reviews and has not config on local database should call for remote and save config`() = runBlocking {
+    fun `when first time request reviews should call for remote, case success save config, increment offset page and insert reviews`() =
+        runBlocking {
 
-//        val configLiveData = MutableLiveData<ConfigDto?>(null)
-//        coEvery { configLocalDataSource.fetchConfigAsLiveData() } returns EitherResult.right(configLiveData)
-//
-//        val reviewsPageView = ReviewsPageView.empty()
-//        coEvery { reviewsRemoteDataSource.fetchReviews(any()) } returns EitherResult.right(reviewsPageView)
-//
-//        repository.requestReviews()
-//        coVerify(exactly = 1) { reviewsRemoteDataSource.fetchReviews(any()) }
-//        coVerify(exactly = 1) { configLocalDataSource.insertConfig(any()) }
-    }
+            coEvery { configLocalDataSource.fetchConfig() } returns EitherResult.right(null)
+            coEvery { configLocalDataSource.insertConfig(any()) } returns EitherResult.right(Unit)
+            coEvery { configLocalDataSource.incrementOffsetPage() } returns EitherResult.right(Unit)
+            coEvery { reviewsLocalDataSource.insertAllReviews(any()) } returns EitherResult.right(
+                Unit
+            )
+
+            val reviewsRemoteResponse = ReviewsRemoteResponse.empty().apply {
+                reviews = listOf(ReviewRemote.empty(), ReviewRemote.empty())
+            }
+            coEvery { reviewsRemoteDataSource.fetchReviews(any()) } returns EitherResult.right(
+                reviewsRemoteResponse
+            )
+
+            repository.requestReviews()
+            coVerify(exactly = 1) { reviewsRemoteDataSource.fetchReviews(any()) }
+            coVerify(exactly = 1) { configLocalDataSource.insertConfig(any()) }
+            coVerify(exactly = 1) { reviewsLocalDataSource.insertAllReviews(any()) }
+            coVerify(exactly = 1) { configLocalDataSource.incrementOffsetPage() }
+        }
+
+    @Test
+    fun `when fallback request reviews should call for remote, case success increment offset page and insert reviews`() =
+        runBlocking {
+
+            val configDto = ConfigDto(offsetPage = 4)
+            coEvery { configLocalDataSource.fetchConfig() } returns EitherResult.right(configDto)
+            coEvery { configLocalDataSource.incrementOffsetPage() } returns EitherResult.right(Unit)
+            coEvery { reviewsLocalDataSource.insertAllReviews(any()) } returns EitherResult.right(
+                Unit
+            )
+
+            val reviewsRemoteResponse = ReviewsRemoteResponse.empty().apply {
+                reviews = listOf(ReviewRemote.empty(), ReviewRemote.empty())
+            }
+            coEvery { reviewsRemoteDataSource.fetchReviews(4) } returns EitherResult.right(
+                reviewsRemoteResponse
+            )
+
+            repository.requestReviews()
+            coVerify(exactly = 1) { reviewsRemoteDataSource.fetchReviews(4) }
+            coVerify(exactly = 1) { reviewsLocalDataSource.insertAllReviews(any()) }
+            coVerify(exactly = 1) { configLocalDataSource.incrementOffsetPage() }
+        }
 }

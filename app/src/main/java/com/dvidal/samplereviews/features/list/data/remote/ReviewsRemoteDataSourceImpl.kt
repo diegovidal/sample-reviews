@@ -16,11 +16,11 @@ class ReviewsRemoteDataSourceImpl @Inject constructor(
     networkHandler: NetworkHandler
 ) : BaseRequester(networkHandler), ReviewsRemoteDataSource {
 
-    override suspend fun fetchReviews(offset: Int): EitherResult<ReviewsPageView> {
+    override suspend fun fetchReviews(offset: Int): EitherResult<ReviewsRemoteResponse> {
 
         return request(
             apiCall = { remoteApi.fetchReviews(NetworkConstants.LIMIT_REVIEWS, offset, NetworkConstants.SORT_BY_DATE) },
-            transform = { response -> response.mapperToReviewsPageView() },
+            transform = { it },
             default = ReviewsRemoteResponse.empty()
         )
     }
