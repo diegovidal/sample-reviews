@@ -3,6 +3,7 @@ package com.dvidal.samplereviews.features.list.domain
 import androidx.lifecycle.LiveData
 import com.dvidal.samplereviews.core.common.Either
 import com.dvidal.samplereviews.core.common.EitherResult
+import com.dvidal.samplereviews.core.datasource.local.LocalConstants
 import com.dvidal.samplereviews.features.list.data.local.config.ConfigDto
 import com.dvidal.samplereviews.features.list.data.local.config.ConfigLocalDataSource
 import com.dvidal.samplereviews.features.list.data.local.reviews.ReviewDto
@@ -26,6 +27,13 @@ class ReviewsRepositoryImpl(
             if (configDto == null) {
                 // First time
                 val remoteResult = reviewsRemoteDataSource.fetchReviews()
+                if (remoteResult.isRight) {
+
+                    // Save config for first time
+                    remoteResult.rightOrNull()?.mapperToConfigDto()?.let { configDtoForSave ->
+                        configLocalDataSource.insertConfig(configDtoForSave)
+                    }
+                }
             }
 
             Either.right(Unit)

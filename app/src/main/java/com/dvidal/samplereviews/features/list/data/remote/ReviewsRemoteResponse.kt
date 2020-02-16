@@ -1,5 +1,6 @@
 package com.dvidal.samplereviews.features.list.data.remote
 
+import com.dvidal.samplereviews.features.list.data.local.config.ConfigDto
 import com.dvidal.samplereviews.features.list.data.local.reviews.ReviewDto
 import com.dvidal.samplereviews.features.list.presentation.AuthorView
 import com.dvidal.samplereviews.features.list.presentation.PaginationView

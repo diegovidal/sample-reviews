@@ -9,7 +9,7 @@ import com.dvidal.samplereviews.core.common.EitherResult
 interface ConfigLocalDataSource {
 
 
-    suspend fun insertConfig(activityName: String, numReviews: Int, averageRating: Double): EitherResult<Unit>
+    suspend fun insertConfig(configDto: ConfigDto): EitherResult<Unit>
 
     suspend fun fetchConfig(): EitherResult<ConfigDto?>
 

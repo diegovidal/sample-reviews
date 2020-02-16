@@ -1,6 +1,7 @@
 package com.dvidal.samplereviews.features.list.presentation
 
 import android.os.Parcelable
+import com.dvidal.samplereviews.features.list.data.local.config.ConfigDto
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -14,6 +15,11 @@ data class ReviewsPageView(
     val averageRating: Double,
     val pagination: PaginationView
 ) {
+
+    fun mapperToConfigDto() = ConfigDto(
+        numReviews = this.totalCount,
+        averageRating = this.averageRating
+    )
 
     companion object {
         fun empty() = ReviewsPageView(

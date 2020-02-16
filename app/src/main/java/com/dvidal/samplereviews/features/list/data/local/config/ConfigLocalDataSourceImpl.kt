@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.dvidal.samplereviews.core.common.EitherResult
 import com.dvidal.samplereviews.core.common.catching
 import com.dvidal.samplereviews.core.datasource.local.AppDatabase
+import com.dvidal.samplereviews.core.datasource.local.LocalConstants
 import javax.inject.Inject
 
 /**
@@ -13,8 +14,8 @@ class ConfigLocalDataSourceImpl @Inject constructor(
     private val appDatabase: AppDatabase
 ): ConfigLocalDataSource {
 
-    override suspend fun insertConfig(activityName: String, numReviews: Int, averageRating: Double): EitherResult<Unit> {
-        val configDto = ConfigDto(activityName = activityName, numReviews = numReviews, averageRating = averageRating)
+    override suspend fun insertConfig(configDto: ConfigDto): EitherResult<Unit> {
+        configDto.activityName = LocalConstants.ACTIVITY_TITLE
         return catching { appDatabase.configDao().insertConfig(configDto) }
     }
 
