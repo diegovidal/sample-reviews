@@ -1,28 +1,59 @@
 package com.dvidal.samplereviews.features.list.domain
 
 import androidx.lifecycle.LiveData
+import com.dvidal.samplereviews.core.common.Either
 import com.dvidal.samplereviews.core.common.EitherResult
-import com.dvidal.samplereviews.features.list.presentation.ConfigView
-import com.dvidal.samplereviews.features.list.presentation.ReviewView
+import com.dvidal.samplereviews.features.list.data.local.config.ConfigDto
+import com.dvidal.samplereviews.features.list.data.local.config.ConfigLocalDataSource
+import com.dvidal.samplereviews.features.list.data.local.reviews.ReviewDto
+import com.dvidal.samplereviews.features.list.data.local.reviews.ReviewsLocalDataSource
+import com.dvidal.samplereviews.features.list.data.remote.ReviewsRemoteDataSource
 
 /**
  * @author diegovidal on 2020-02-15.
  */
-class ReviewsRepositoryImpl: ReviewsRepository {
+class ReviewsRepositoryImpl(
+    private val reviewsLocalDataSource: ReviewsLocalDataSource,
+    private val reviewsRemoteDataSource: ReviewsRemoteDataSource,
+    private val configLocalDataSource: ConfigLocalDataSource
+) : ReviewsRepository {
 
-    override fun fetchConfig(): EitherResult<LiveData<ConfigView>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun requestReviews(): EitherResult<Unit> {
+
+        return try {
+
+            val configDto = configLocalDataSource.fetchConfig().rightOrNull()
+            if (configDto == null) {
+                // First time
+                val remoteResult = reviewsRemoteDataSource.fetchReviews()
+            }
+
+            Either.right(Unit)
+        } catch (t: Throwable) {
+
+            Either.left(t)
+        }
     }
 
-    override fun fetchReviews(): EitherResult<LiveData<List<ReviewView>>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun fetchConfig(): EitherResult<LiveData<ConfigDto?>> {
+        return configLocalDataSource.fetchConfigAsLiveData()
+    }
+
+    override fun fetchReviews(): EitherResult<LiveData<List<ReviewDto>>> {
+        return reviewsLocalDataSource.fetchReviews()
     }
 
     override suspend fun toggleSortByRating(): EitherResult<Unit> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return configLocalDataSource.toggleSortByRating()
     }
 
     override suspend fun clearCache(): EitherResult<Unit> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        return try {
+            reviewsLocalDataSource.clearReviews()
+            configLocalDataSource.clearConfig()
+        } catch (t: Throwable) {
+            Either.left(t)
+        }
     }
 }

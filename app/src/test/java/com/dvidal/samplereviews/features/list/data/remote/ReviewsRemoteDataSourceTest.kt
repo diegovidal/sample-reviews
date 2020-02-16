@@ -32,13 +32,11 @@ class ReviewsRemoteDataSourceTest {
     @Test
     fun `when fetch reviews should call remoteApi fetch reviews and return a ReviewPageView`() = runBlocking {
 
-        val limitReviews = 5
-
         val remoteResponse = ReviewsRemoteResponse.empty()
-        coEvery { remoteApi.fetchReviews(limitReviews) } returns remoteResponse
+        coEvery { remoteApi.fetchReviews(any(), any(), any()) } returns remoteResponse
 
-        val reviewsPageView = remoteDataSource.fetchReviews(limitReviews).rightOrNull()
-        coVerify(exactly = 1) {remoteApi.fetchReviews(limitReviews)}
+        val reviewsPageView = remoteDataSource.fetchReviews().rightOrNull()
+        coVerify(exactly = 1) {remoteApi.fetchReviews(any(), any(), any())}
         assertEquals(remoteResponse.mapperToReviewsPageView(), reviewsPageView)
     }
 }

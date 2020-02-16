@@ -44,6 +44,16 @@ class ConfigDaoTest {
 
         appDatabase.configDao().insertConfig(dummyConfigDto)
         val configDto = appDatabase.configDao().fetchConfig()
+        assertEquals(dummyConfigDto, configDto)
+    }
+
+    @Test
+    fun `when add config should return config as live data`() = runBlocking {
+
+        val dummyConfigDto = ConfigDto()
+
+        appDatabase.configDao().insertConfig(dummyConfigDto)
+        val configDto = appDatabase.configDao().fetchConfigAsLiveData()
         assertEquals(dummyConfigDto, configDto.getOrAwaitValue())
     }
 
@@ -53,11 +63,11 @@ class ConfigDaoTest {
         val dummyConfigDto = ConfigDto()
 
         appDatabase.configDao().insertConfig(dummyConfigDto)
-        var configDto = appDatabase.configDao().fetchConfig()
+        var configDto = appDatabase.configDao().fetchConfigAsLiveData()
         assertEquals(dummyConfigDto, configDto.getOrAwaitValue())
 
         appDatabase.configDao().clearConfig()
-        configDto = appDatabase.configDao().fetchConfig()
+        configDto = appDatabase.configDao().fetchConfigAsLiveData()
         assertEquals(null, configDto.getOrAwaitValue())
     }
 
@@ -67,11 +77,11 @@ class ConfigDaoTest {
         val dummyConfigDto = ConfigDto()
 
         appDatabase.configDao().insertConfig(dummyConfigDto)
-        val configDto = appDatabase.configDao().fetchConfig()
-        assertEquals(0, configDto.getOrAwaitValue().offsetPage)
+        val configDto = appDatabase.configDao().fetchConfigAsLiveData()
+        assertEquals(0, configDto.getOrAwaitValue()?.offsetPage)
 
         repeat(2) {appDatabase.configDao().incrementOffsetPage()}
-        assertEquals(2, configDto.getOrAwaitValue().offsetPage)
+        assertEquals(2, configDto.getOrAwaitValue()?.offsetPage)
     }
 
     @Test
@@ -80,11 +90,18 @@ class ConfigDaoTest {
         val dummyConfigDto = ConfigDto()
 
         appDatabase.configDao().insertConfig(dummyConfigDto)
-        var configDto = appDatabase.configDao().fetchConfig()
-        assertEquals(true, configDto.getOrAwaitValue().isDescendingOrderRating)
+        var configDto = appDatabase.configDao().fetchConfigAsLiveData()
+        assertEquals(true, configDto.getOrAwaitValue()?.isDescendingOrderRating)
 
         appDatabase.configDao().toggleSortByRating()
-        configDto = appDatabase.configDao().fetchConfig()
-        assertEquals(false, configDto.getOrAwaitValue().isDescendingOrderRating)
+        configDto = appDatabase.configDao().fetchConfigAsLiveData()
+        assertEquals(false, configDto.getOrAwaitValue()?.isDescendingOrderRating)
+    }
+
+    @Test
+    fun `when fetch config and has nothing should return null`() = runBlocking {
+
+        val configDto = appDatabase.configDao().fetchConfig()
+        assertEquals(null, configDto)
     }
 }

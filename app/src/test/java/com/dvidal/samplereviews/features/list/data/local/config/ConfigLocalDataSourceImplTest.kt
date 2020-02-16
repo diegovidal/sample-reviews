@@ -38,11 +38,21 @@ class ConfigLocalDataSourceImplTest {
     fun `when fetch config should call configDao fetch config`() = runBlocking {
 
         val dummyConfigDto = ConfigDto()
-        val dummyLiveData = MutableLiveData(dummyConfigDto)
-        every { appDatabase.configDao().fetchConfig() } returns dummyLiveData
+        coEvery { appDatabase.configDao().fetchConfig() } returns dummyConfigDto
 
         dataSource.fetchConfig()
         coVerify(exactly = 1) { appDatabase.configDao().fetchConfig() }
+    }
+
+    @Test
+    fun `when fetch config should call configDao fetch config as live data`() = runBlocking {
+
+        val dummyConfigDto = ConfigDto()
+        val dummyLiveData = MutableLiveData(dummyConfigDto)
+        every { appDatabase.configDao().fetchConfigAsLiveData() } returns dummyLiveData
+
+        dataSource.fetchConfigAsLiveData()
+        coVerify(exactly = 1) { appDatabase.configDao().fetchConfigAsLiveData() }
     }
 
     @Test

@@ -13,15 +13,17 @@ class ConfigLocalDataSourceImpl @Inject constructor(
     private val appDatabase: AppDatabase
 ): ConfigLocalDataSource {
 
-
-
     override suspend fun insertConfig(activityName: String, numReviews: Int, averageRating: Double): EitherResult<Unit> {
         val configDto = ConfigDto(activityName = activityName, numReviews = numReviews, averageRating = averageRating)
         return catching { appDatabase.configDao().insertConfig(configDto) }
     }
 
-    override fun fetchConfig(): EitherResult<LiveData<ConfigDto>> {
+    override suspend fun fetchConfig(): EitherResult<ConfigDto?> {
         return catching { appDatabase.configDao().fetchConfig() }
+    }
+
+    override fun fetchConfigAsLiveData(): EitherResult<LiveData<ConfigDto?>> {
+        return catching { appDatabase.configDao().fetchConfigAsLiveData() }
     }
 
     override suspend fun incrementOffsetPage(): EitherResult<Unit> {

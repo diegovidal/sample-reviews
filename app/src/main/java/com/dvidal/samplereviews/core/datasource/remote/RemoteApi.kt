@@ -13,6 +13,6 @@ interface RemoteApi {
     suspend fun fetchReviews(
         @Query("limit") limit: Int,
         @Query("offset") offset: Int = 0,
-        @Query("sort") sort: String = "date:desc"
+        @Query("sort") sort: String = ""
     ): ReviewsRemoteResponse
 }

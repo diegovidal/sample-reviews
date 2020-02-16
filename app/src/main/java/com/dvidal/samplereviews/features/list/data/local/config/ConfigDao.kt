@@ -17,7 +17,10 @@ interface ConfigDao {
     suspend fun insertConfig(configDto: ConfigDto)
 
     @Query("SELECT * FROM configdto WHERE -1 LIMIT 1")
-    fun fetchConfig(): LiveData<ConfigDto>
+    suspend fun fetchConfig(): ConfigDto?
+
+    @Query("SELECT * FROM configdto WHERE -1 LIMIT 1")
+    fun fetchConfigAsLiveData(): LiveData<ConfigDto?>
 
     @Query("UPDATE configdto SET offsetPage = offsetPage + 1 WHERE id = -1")
     suspend fun incrementOffsetPage()

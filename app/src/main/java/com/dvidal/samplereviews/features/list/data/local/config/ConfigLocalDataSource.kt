@@ -11,7 +11,9 @@ interface ConfigLocalDataSource {
 
     suspend fun insertConfig(activityName: String, numReviews: Int, averageRating: Double): EitherResult<Unit>
 
-    fun fetchConfig(): EitherResult<LiveData<ConfigDto>>
+    suspend fun fetchConfig(): EitherResult<ConfigDto?>
+
+    fun fetchConfigAsLiveData(): EitherResult<LiveData<ConfigDto?>>
 
     suspend fun incrementOffsetPage(): EitherResult<Unit>
 
