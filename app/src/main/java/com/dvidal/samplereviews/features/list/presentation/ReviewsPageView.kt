@@ -40,7 +40,22 @@ data class ReviewView(
     val rating: Int,
     val created: String,
     val travelerType: String
-): Parcelable
+): Parcelable {
+
+    companion object {
+
+        fun empty() = ReviewView(
+            author = AuthorView.empty(),
+            title = "",
+            message = "",
+            enjoyment = "",
+            isAnonymous = false,
+            rating = 0,
+            created = "",
+            travelerType = ""
+        )
+    }
+}
 
 @Parcelize
 data class AuthorView(
@@ -49,7 +64,18 @@ data class AuthorView(
     val country: String,
     val city: String,
     val photo: String
-): Parcelable
+): Parcelable {
+
+    companion object {
+
+        fun empty() = AuthorView(
+            fullName = "",
+            country = "",
+            city = "",
+            photo = ""
+        )
+    }
+}
 
 data class PaginationView(
 

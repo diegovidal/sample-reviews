@@ -19,7 +19,7 @@ android {
         testInstrumentationRunner config["test_runner"]
 
         buildConfigField "String", "API_ENDPOINT", "\"https://travelers-api.getyourguide.com/\""
-        buildConfigField "String", "USER_AGENT_VALUE", "GetYourGuide"
+        buildConfigField "String", "USER_AGENT_VALUE", "\"GetYourGuide\""
     }
 
     buildTypes {

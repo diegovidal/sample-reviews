@@ -1,5 +1,6 @@
 package com.dvidal.samplereviews.features.list.presentation
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
 import com.dvidal.samplereviews.core.common.BaseCoroutineDispatcher
@@ -39,7 +40,7 @@ class ReviewsViewModel @Inject constructor(
             }
         }
 
-    private val userInteraction = SingleLiveEvent<ReviewsViewContract.UserInteraction>()
+    @VisibleForTesting val userInteraction = SingleLiveEvent<ReviewsViewContract.UserInteraction>()
     override fun invokeUserInteraction(userInteraction: ReviewsViewContract.UserInteraction) {
         this.userInteraction.postValue(userInteraction)
     }
@@ -76,16 +77,14 @@ class ReviewsViewModel @Inject constructor(
 
                         configDto?.mapperToConfigView()?.let {configView ->
                             postValue(ReviewsViewContract.ViewState.ConfigLiveEvent.ConfigPageScreen(configView))
-                        }
-
+                        } ?: invokeUserInteraction(ReviewsViewContract.UserInteraction.RequestReviewsEvent)
                     }
                 }
             }
         }
-
     }
 
-    private fun handleUserInteraction(userInteraction: ReviewsViewContract.UserInteraction) {
+    @VisibleForTesting fun handleUserInteraction(userInteraction: ReviewsViewContract.UserInteraction) {
 
         viewModelScope.launch(dispatcher.IO()) {
             when (userInteraction) {

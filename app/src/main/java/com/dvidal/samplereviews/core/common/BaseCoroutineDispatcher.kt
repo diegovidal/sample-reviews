@@ -1,7 +1,6 @@
 package com.dvidal.samplereviews.core.common
 
 import kotlinx.coroutines.Dispatchers
-import okhttp3.Dispatcher
 import javax.inject.Inject
 
 /**
