@@ -32,7 +32,6 @@ data class ReviewsPageView(
 @Parcelize
 data class ReviewView(
 
-    val id: Long,
     val author: AuthorView,
     val title: String,
     val message: String,
@@ -40,7 +39,6 @@ data class ReviewView(
     val isAnonymous: Boolean,
     val rating: Int,
     val created: String,
-    val language: String,
     val travelerType: String
 ): Parcelable
 

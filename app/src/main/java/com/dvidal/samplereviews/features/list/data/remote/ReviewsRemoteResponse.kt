@@ -61,7 +61,6 @@ data class ReviewRemote(
 ) {
 
     fun mapperToReviewView() = ReviewView(
-        id = this.id,
         author = this.author.mapperToAuthorView(),
         title = this.title,
         message = this.message,
@@ -69,7 +68,6 @@ data class ReviewRemote(
         isAnonymous = this.isAnonymous,
         rating = this.rating,
         created = this.created,
-        language = this.language,
         travelerType = this.travelerType
     )
 
