@@ -1,6 +1,5 @@
 package com.dvidal.samplereviews.features.list.domain.usecases
 
-import com.dvidal.samplereviews.core.common.EitherResult
 import com.dvidal.samplereviews.core.common.UseCase
 import com.dvidal.samplereviews.features.list.domain.ReviewsRepository
 import dagger.Reusable
