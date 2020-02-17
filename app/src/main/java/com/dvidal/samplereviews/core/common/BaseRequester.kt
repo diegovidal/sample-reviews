@@ -2,6 +2,7 @@ package com.dvidal.samplereviews.core.common
 
 import com.dvidal.samplereviews.core.datasource.remote.NetworkHandler
 import com.dvidal.samplereviews.core.datasource.remote.RemoteFailure
+import timber.log.Timber
 
 /**
  * @author diegovidal on 2020-02-15.
@@ -21,8 +22,10 @@ abstract class BaseRequester(
     private suspend fun <T, R> requestHttp(apiCall: suspend() -> T, transform: (T) -> R, default: T): EitherResult<R> {
         return try {
             val response = apiCall.invoke()
+            Timber.e("response: $response")
             EitherResult.right(transform((response ?: default)))
         } catch (exception: Throwable) {
+            Timber.e("Error: $exception")
             EitherResult.left(RemoteFailure.ServerError())
         }
     }

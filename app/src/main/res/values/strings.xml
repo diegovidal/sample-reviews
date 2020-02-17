@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SampleReviews</string>
+    <string name="review_details_title">Review Details</string>
+    <string name="reviews_title">Reviews</string>
 </resources>

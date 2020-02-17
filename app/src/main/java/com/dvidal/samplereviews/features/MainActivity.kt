@@ -20,6 +20,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         injectDagger()
+
+        if (savedInstanceState == null) {
+            navigator.navigateTo(this, intent.extras)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0)
+            super.onBackPressed()
+        else finish()
+    }
+
+    fun updateActionBarTitle(title: Int) {
+        supportActionBar?.setTitle(title)
     }
 }

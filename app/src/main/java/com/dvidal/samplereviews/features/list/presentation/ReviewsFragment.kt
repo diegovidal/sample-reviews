@@ -6,6 +6,8 @@ import androidx.lifecycle.Observer
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.core.common.BaseFragment
 import com.dvidal.samplereviews.core.di.module.viewmodel.ViewModelFactory
+import com.dvidal.samplereviews.features.MainActivity
+import kotlinx.android.synthetic.main.fragment_reviews.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,5 +36,25 @@ class ReviewsFragment: BaseFragment() {
         viewModel.reviewsLiveEvents.observe(viewLifecycleOwner, Observer {
             Timber.i("Info Reviews")
         })
+
+        viewModel.singleLiveEvents.observe(viewLifecycleOwner, Observer {
+            Timber.i("Single Live Events")
+        })
+
+        bt_load.setOnClickListener {
+            viewModel.invokeUserInteraction(ReviewsViewContract.UserInteraction.InitPageEvent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? MainActivity)?.updateActionBarTitle(R.string.reviews_title)
+    }
+
+    companion object {
+
+        const val REVIEWS_FRAGMENT = "REVIEWS_FRAGMENT"
+
+        fun newInstance() = ReviewsFragment()
     }
 }

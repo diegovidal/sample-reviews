@@ -18,33 +18,33 @@ sealed class ReviewsViewContract {
         fun invokeUserInteraction(userInteraction: UserInteraction)
     }
 
-    sealed class UserInteraction: ReviewsViewContract(){
+    sealed class UserInteraction : ReviewsViewContract() {
 
-        object InitPageEvent: UserInteraction()
-        object RequestReviewsEvent: UserInteraction()
-        object ToggleSortByRatingEvent: UserInteraction()
-        object RefreshPageEvent: UserInteraction()
-        data class NavigateToReviewDetails(val reviewDetails: ReviewView): UserInteraction()
+        object InitPageEvent : UserInteraction()
+        object RequestReviewsEvent : UserInteraction()
+        object ToggleSortByRatingEvent : UserInteraction()
+        object RefreshPageEvent : UserInteraction()
+        data class NavigateToReviewDetails(val reviewDetails: ReviewView) : UserInteraction()
     }
 
-    sealed class ViewState: ReviewsViewContract() {
+    sealed class ViewState : ReviewsViewContract() {
 
         sealed class ReviewsLiveEvent {
 
-            data class ReviewsPageScreen(val list: List<ReviewView>): ReviewsLiveEvent()
-            object ReviewsPageLoading: ReviewsLiveEvent()
+            data class ReviewsPageScreen(val list: List<ReviewView>) : ReviewsLiveEvent()
+            object ReviewsPageLoading : ReviewsLiveEvent()
         }
 
         sealed class ConfigLiveEvent {
 
-            data class ConfigPageScreen(val config: ConfigView): ConfigLiveEvent()
-            object ConfigPageLoading: ConfigLiveEvent()
+            data class ConfigPageScreen(val config: ConfigView) : ConfigLiveEvent()
+            object ConfigPageLoading : ConfigLiveEvent()
         }
 
-        sealed class SingleLiveEvent: ViewState() {
+        sealed class SingleLiveEvent : ViewState() {
 
-            data class ErrorWarning(val throwable: Throwable): SingleLiveEvent()
-            data class NavigateToReviewDetails(val reviewDetails: ReviewView): SingleLiveEvent()
+            data class ErrorWarning(val throwable: Throwable) : SingleLiveEvent()
+            data class NavigateToReviewDetails(val reviewDetails: ReviewView) : SingleLiveEvent()
         }
     }
 }

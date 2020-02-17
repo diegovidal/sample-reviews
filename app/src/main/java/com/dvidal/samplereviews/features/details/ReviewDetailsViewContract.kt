@@ -5,7 +5,9 @@ package com.dvidal.samplereviews.features.details
  */
 sealed class ReviewDetailsViewContract {
 
-    sealed class ViewModel: ReviewDetailsViewContract(){}
+    interface ViewModel {
+
+    }
 
     sealed class UserInteraction: ReviewDetailsViewContract(){}
 

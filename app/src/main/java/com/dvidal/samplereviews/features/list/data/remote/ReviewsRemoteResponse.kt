@@ -50,14 +50,14 @@ data class ReviewRemote(
 
     @Json(name = "id") val id: Long,
     @Json(name = "author") val author: AuthorRemote,
-    @Json(name = "title") val title: String,
-    @Json(name = "message") val message: String,
-    @Json(name = "enjoyment") val enjoyment: String,
-    @Json(name = "isAnonymous") val isAnonymous: Boolean,
+    @Json(name = "title") val title: String = "",
+    @Json(name = "message") val message: String = "",
+    @Json(name = "enjoyment") val enjoyment: String = "",
+    @Json(name = "isAnonymous") val isAnonymous: Boolean = false,
     @Json(name = "rating") val rating: Int,
-    @Json(name = "created") val created: String,
-    @Json(name = "language") val language: String,
-    @Json(name = "travelerType") val travelerType: String
+    @Json(name = "created") val created: String = "",
+    @Json(name = "language") val language: String = "",
+    @Json(name = "travelerType") val travelerType: String = ""
 ) {
 
     fun mapperToReviewView() = ReviewView(
@@ -104,10 +104,10 @@ data class ReviewRemote(
 
 data class AuthorRemote(
 
-    @Json(name = "fullName") val fullName: String,
-    @Json(name = "country") val country: String,
-    @Json(name = "city") val city: String,
-    @Json(name = "photo") val photo: String
+    @Json(name = "fullName") val fullName: String = "",
+    @Json(name = "country") val country: String = "",
+    @Json(name = "city") val city: String = "",
+    @Json(name = "photo") val photo: String = ""
 ) {
 
     fun mapperToAuthorView() = AuthorView(

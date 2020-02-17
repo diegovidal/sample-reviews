@@ -8,6 +8,7 @@ import com.dvidal.samplereviews.core.common.BaseViewModel
 import com.dvidal.samplereviews.core.common.SingleLiveEvent
 import com.dvidal.samplereviews.core.common.UseCase
 import com.dvidal.samplereviews.features.list.domain.usecases.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -24,9 +25,8 @@ class ReviewsViewModel @Inject constructor(
     private val toggleSortByRatingUseCase: ToggleSortByRatingUseCase
 ) : BaseViewModel(), ReviewsViewContract.ViewModel {
 
-    override val reviewsLiveEvents = MediatorLiveData<ReviewsViewContract.ViewState.ReviewsLiveEvent>()
-
-    override val configLiveEvents = MediatorLiveData<ReviewsViewContract.ViewState.ConfigLiveEvent>()
+    @VisibleForTesting
+    val userInteraction = SingleLiveEvent<ReviewsViewContract.UserInteraction>()
 
     override val singleLiveEvents =
         SingleLiveEvent<ReviewsViewContract.ViewState.SingleLiveEvent>().apply {
@@ -40,7 +40,12 @@ class ReviewsViewModel @Inject constructor(
             }
         }
 
-    @VisibleForTesting val userInteraction = SingleLiveEvent<ReviewsViewContract.UserInteraction>()
+    override val reviewsLiveEvents =
+        MediatorLiveData<ReviewsViewContract.ViewState.ReviewsLiveEvent>()
+
+    override val configLiveEvents =
+        MediatorLiveData<ReviewsViewContract.ViewState.ConfigLiveEvent>()
+
     override fun invokeUserInteraction(userInteraction: ReviewsViewContract.UserInteraction) {
         this.userInteraction.postValue(userInteraction)
     }
@@ -52,14 +57,12 @@ class ReviewsViewModel @Inject constructor(
             it.either(::handleFailure) { liveData ->
                 reviewsLiveEvents.apply {
 
-                    addSource(liveData) { list ->
+                    viewModelScope.launch(Dispatchers.Main) {
+                        addSource(liveData) { list ->
 
-                        val listConverted = list.map { it.mapperToReviewView() }
-                        postValue(
-                            ReviewsViewContract.ViewState.ReviewsLiveEvent.ReviewsPageScreen(
-                                listConverted
-                            )
-                        )
+                            val listConverted = list.map { it.mapperToReviewView() }
+                            postValue(ReviewsViewContract.ViewState.ReviewsLiveEvent.ReviewsPageScreen(listConverted))
+                        }
                     }
                 }
             }
@@ -73,18 +76,25 @@ class ReviewsViewModel @Inject constructor(
             it.either(::handleFailure) { liveData ->
                 configLiveEvents.apply {
 
-                    addSource(liveData) { configDto ->
+                    viewModelScope.launch(Dispatchers.Main) {
+                        addSource(liveData) { configDto ->
 
-                        configDto?.mapperToConfigView()?.let {configView ->
-                            postValue(ReviewsViewContract.ViewState.ConfigLiveEvent.ConfigPageScreen(configView))
-                        } ?: invokeUserInteraction(ReviewsViewContract.UserInteraction.RequestReviewsEvent)
+                            configDto?.mapperToConfigView()?.let { configView ->
+                                postValue(
+                                    ReviewsViewContract.ViewState.ConfigLiveEvent.ConfigPageScreen(
+                                        configView
+                                    )
+                                )
+                            } ?: invokeUserInteraction(ReviewsViewContract.UserInteraction.RequestReviewsEvent)
+                        }
                     }
                 }
             }
         }
     }
 
-    @VisibleForTesting fun handleUserInteraction(userInteraction: ReviewsViewContract.UserInteraction) {
+    @VisibleForTesting
+    fun handleUserInteraction(userInteraction: ReviewsViewContract.UserInteraction) {
 
         viewModelScope.launch(dispatcher.IO()) {
             when (userInteraction) {
@@ -96,26 +106,30 @@ class ReviewsViewModel @Inject constructor(
                 is ReviewsViewContract.UserInteraction.RequestReviewsEvent -> {
 
                     requestReviewsUseCase.invoke(UseCase.None()).also {
-                        it.either(::handleFailure){}
+                        it.either(::handleFailure) {}
                     }
                 }
                 is ReviewsViewContract.UserInteraction.ToggleSortByRatingEvent -> {
 
                     toggleSortByRatingUseCase.invoke(UseCase.None()).also {
-                        it.either(::handleFailure){}
+                        it.either(::handleFailure) {}
                     }
                 }
                 is ReviewsViewContract.UserInteraction.RefreshPageEvent -> {
 
                     refreshPageUseCase.invoke(UseCase.None()).also {
-                        it.either(::handleFailure){}
+                        it.either(::handleFailure) {}
                     }
                 }
                 is ReviewsViewContract.UserInteraction.NavigateToReviewDetails -> {
 
-                    withContext(dispatcher.Main()) {singleLiveEvents.postValue(
-                        ReviewsViewContract.ViewState.SingleLiveEvent.NavigateToReviewDetails(userInteraction.reviewDetails)
-                    )}
+                    withContext(dispatcher.Main()) {
+                        singleLiveEvents.postValue(
+                            ReviewsViewContract.ViewState.SingleLiveEvent.NavigateToReviewDetails(
+                                userInteraction.reviewDetails
+                            )
+                        )
+                    }
                 }
             }
         }
