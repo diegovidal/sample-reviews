@@ -3,7 +3,8 @@ package com.dvidal.samplereviews
 import android.content.Intent
 import androidx.lifecycle.MediatorLiveData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
@@ -38,21 +39,19 @@ class ExampleInstrumentedTest: BaseEspressoTest() {
     @Before
     fun setup() {
 
-    }
-
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-
         every { viewModel.configLiveEvents } returns configLiveEvents
         every { viewModel.reviewsLiveEvents } returns reviewsLiveEvents
         every { viewModel.singleLiveEvents } returns singleLiveEvents
 
         val viewModelFactory = application.appComponent.viewModelFactor
         every { viewModelFactory.create(ReviewsViewModel::class.java) } returns viewModel
+    }
+
+    @Test
+    fun useAppContext() {
 
         activityRule.launchActivity(Intent())
 
-        onView(withId(R.id.bt_load)).perform(click())
+        onView(withId(R.id.bt_load)).check(matches(isDisplayed()))
     }
 }

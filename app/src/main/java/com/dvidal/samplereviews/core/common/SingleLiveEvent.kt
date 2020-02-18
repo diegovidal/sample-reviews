@@ -62,6 +62,9 @@ class SingleLiveEvent<T> : MediatorLiveData<T>() {
     }
 }
 
+/**
+ * @author diegovidal on 2019-10-16.
+ */
 fun <T> MutableLiveData<T>.notLet(block: (MutableLiveData<T>) -> Unit) {
     if (this.value == null) block.invoke(this)
 }
