@@ -1,8 +1,8 @@
 package com.dvidal.samplereviews
 
 import android.app.Application
+import com.dvidal.samplereviews.core.common.BaseAppComponent
 import com.dvidal.samplereviews.core.di.component.DaggerAppComponent
-import com.dvidal.samplereviews.core.di.component.SeiLa
 import com.dvidal.samplereviews.core.di.module.ApplicationModule
 import timber.log.Timber
 
@@ -11,7 +11,7 @@ import timber.log.Timber
  */
 class MyApplication: Application(), BaseApplication {
 
-    override val appComponent: SeiLa by lazy {
+    override val appComponent: BaseAppComponent by lazy {
         DaggerAppComponent
             .builder()
             .applicationModule(ApplicationModule(this))

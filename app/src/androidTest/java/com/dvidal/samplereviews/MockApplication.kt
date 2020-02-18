@@ -1,7 +1,7 @@
 package com.dvidal.samplereviews
 
 import android.app.Application
-import com.dvidal.samplereviews.core.di.component.SeiLa
+import com.dvidal.samplereviews.core.common.BaseAppComponent
 import com.dvidal.samplereviews.core.di.module.ApplicationModule
 import com.dvidal.samplereviews.di.DaggerAppTestComponent
 
@@ -10,10 +10,9 @@ import com.dvidal.samplereviews.di.DaggerAppTestComponent
  */
 class MockApplication: Application(), BaseApplication {
 
-    override val appComponent: SeiLa by lazy {
+    override val appComponent: BaseAppComponent by lazy {
         DaggerAppTestComponent
             .builder()
-            .applicationModule(ApplicationModule(this))
             .build()
     }
 }
