@@ -2,6 +2,7 @@ package com.dvidal.samplereviews.features
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.dvidal.samplereviews.IMyApplication
 import com.dvidal.samplereviews.MyApplication
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.core.navigator.Navigator
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navigator: Navigator
 
     private fun injectDagger() {
-        (application as MyApplication).appComponent.activityComponent()
+        (application as IMyApplication).appComponent.activityComponent()
             .build().inject(this)
     }
 

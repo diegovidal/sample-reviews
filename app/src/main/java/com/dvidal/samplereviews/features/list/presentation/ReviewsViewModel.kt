@@ -16,7 +16,7 @@ import javax.inject.Inject
 /**
  * @author diegovidal on 2020-02-16.
  */
-class ReviewsViewModel @Inject constructor(
+open class ReviewsViewModel @Inject constructor(
     private val dispatcher: BaseCoroutineDispatcher,
     private val fetchConfigUseCase: FetchConfigUseCase,
     private val fetchReviewsUseCase: FetchReviewsUseCase,

@@ -67,10 +67,11 @@ ext {
 
     integrationTesting = [
 
-            extJunit:   "androidx.test.ext:junit:$extJunit_version",
-            mockk:      "io.mockk:mockk:$mockk_version",
-            espresso:   "androidx.test.espresso:espresso-core:$espresso_version",
-            archCore:   "androidx.arch.core:core-testing:$archCore_version"
+            extJunit:       "androidx.test.ext:junit:$extJunit_version",
+            mockk:          "io.mockk:mockk:$mockk_version",
+            mockkAndroid:   "io.mockk:mockk-android:$mockk_version",
+            espresso:       "androidx.test.espresso:espresso-core:$espresso_version",
+            archCore:       "androidx.arch.core:core-testing:$archCore_version"
     ]
 
 }

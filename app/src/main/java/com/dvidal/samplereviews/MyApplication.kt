@@ -3,15 +3,16 @@ package com.dvidal.samplereviews
 import android.app.Application
 import com.dvidal.samplereviews.core.di.component.AppComponent
 import com.dvidal.samplereviews.core.di.component.DaggerAppComponent
+import com.dvidal.samplereviews.core.di.component.SeiLa
 import com.dvidal.samplereviews.core.di.module.ApplicationModule
 import timber.log.Timber
 
 /**
  * @author diegovidal on 2020-02-14.
  */
-class MyApplication: Application() {
+class MyApplication: Application(), IMyApplication {
 
-    val appComponent: AppComponent by lazy {
+    override val appComponent: SeiLa by lazy {
         DaggerAppComponent
             .builder()
             .applicationModule(ApplicationModule(this))

@@ -77,6 +77,13 @@ dependencies {
     // Integration Testing
     androidTestImplementation integrationTestDependencies.extJunit
     androidTestImplementation integrationTestDependencies.mockk
+    androidTestImplementation integrationTestDependencies.mockkAndroid
     androidTestImplementation integrationTestDependencies.espresso
     androidTestImplementation integrationTestDependencies.archCore
+    androidTestImplementation applicationDependencies.dagger
+
+    kaptAndroidTest applicationDependencies.daggerCompiler
+    kaptAndroidTest applicationDependencies.daggerProcessor
+
+    androidTestImplementation "androidx.test:rules:1.3.0-alpha03"
 }

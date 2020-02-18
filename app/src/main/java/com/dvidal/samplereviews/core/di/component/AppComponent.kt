@@ -1,5 +1,6 @@
 package com.dvidal.samplereviews.core.di.component
 
+import androidx.lifecycle.ViewModelProvider
 import com.dvidal.samplereviews.core.di.module.ApplicationModule
 import com.dvidal.samplereviews.core.di.module.DatabaseModule
 import com.dvidal.samplereviews.core.di.module.RemoteModule
@@ -19,7 +20,14 @@ import javax.inject.Singleton
     RepositoryModule::class,
     ViewModelModule::class
 ])
-interface AppComponent {
+interface AppComponent: SeiLa {
+
+    override fun activityComponent(): ActivityComponent.Builder
+    override val viewModelFactor: ViewModelProvider.Factory
+}
+
+interface SeiLa {
 
     fun activityComponent(): ActivityComponent.Builder
+    val viewModelFactor: ViewModelProvider.Factory
 }

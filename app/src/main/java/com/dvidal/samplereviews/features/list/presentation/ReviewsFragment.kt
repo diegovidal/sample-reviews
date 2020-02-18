@@ -3,6 +3,8 @@ package com.dvidal.samplereviews.features.list.presentation
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.core.common.BaseFragment
 import com.dvidal.samplereviews.core.di.module.viewmodel.ViewModelFactory
@@ -17,10 +19,10 @@ import javax.inject.Inject
 class ReviewsFragment: BaseFragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: ReviewsViewContract.ViewModel by lazy {
-        viewModelFactory.get<ReviewsViewModel>(requireActivity()) as ReviewsViewContract.ViewModel
+        ViewModelProviders.of(requireActivity(), viewModelFactory).get(ReviewsViewModel::class.java)
     }
 
     override fun layoutRes() = R.layout.fragment_reviews

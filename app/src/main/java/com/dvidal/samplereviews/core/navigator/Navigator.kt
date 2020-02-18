@@ -18,11 +18,11 @@ class Navigator @Inject constructor() {
 
             ReviewDetailsFragment.REVIEW_DETAILS_FRAGMENT -> navigateToReviewDetailsFragment(activity)
             ReviewsFragment.REVIEWS_FRAGMENT -> navigateToReviewsFragment(activity)
-            else -> navigateToReviewDetailsFragment(activity)
+            else -> navigateToReviewsFragment(activity)
         }
     }
 
-    fun navigateToReviewsFragment(activity: AppCompatActivity) {
+    private fun navigateToReviewsFragment(activity: AppCompatActivity) {
 
         activity.supportFragmentManager.beginTransaction()
             .replace(R.id.frame_content, ReviewsFragment.newInstance())
