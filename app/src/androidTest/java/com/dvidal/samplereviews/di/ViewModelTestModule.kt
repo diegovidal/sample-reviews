@@ -23,9 +23,3 @@ class ViewModelTestModule {
     @Singleton
     fun provideViewModelFactory(): ViewModelProvider.Factory = mockk()
 }
-
-@Module
-abstract class SeiLaModule {
-
-
-}

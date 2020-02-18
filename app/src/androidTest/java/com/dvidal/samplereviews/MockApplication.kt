@@ -8,7 +8,7 @@ import com.dvidal.samplereviews.di.DaggerAppTestComponent
 /**
  * @author diegovidal on 2020-02-17.
  */
-class MockApplication: Application(), IMyApplication {
+class MockApplication: Application(), BaseApplication {
 
     override val appComponent: SeiLa by lazy {
         DaggerAppTestComponent

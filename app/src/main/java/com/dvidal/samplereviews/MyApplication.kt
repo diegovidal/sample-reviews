@@ -1,7 +1,6 @@
 package com.dvidal.samplereviews
 
 import android.app.Application
-import com.dvidal.samplereviews.core.di.component.AppComponent
 import com.dvidal.samplereviews.core.di.component.DaggerAppComponent
 import com.dvidal.samplereviews.core.di.component.SeiLa
 import com.dvidal.samplereviews.core.di.module.ApplicationModule
@@ -10,7 +9,7 @@ import timber.log.Timber
 /**
  * @author diegovidal on 2020-02-14.
  */
-class MyApplication: Application(), IMyApplication {
+class MyApplication: Application(), BaseApplication {
 
     override val appComponent: SeiLa by lazy {
         DaggerAppComponent

@@ -2,11 +2,9 @@ package com.dvidal.samplereviews
 
 import android.content.Intent
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.dvidal.samplereviews.core.common.SingleLiveEvent
@@ -15,13 +13,10 @@ import com.dvidal.samplereviews.features.list.presentation.ReviewsViewContract
 import com.dvidal.samplereviews.features.list.presentation.ReviewsViewModel
 import io.mockk.every
 import io.mockk.mockk
-
-import org.junit.Test
-import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
  * Instrumented test, which will execute on an Android device.

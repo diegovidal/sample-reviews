@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.core.common.BaseFragment
-import com.dvidal.samplereviews.core.di.module.viewmodel.ViewModelFactory
 import com.dvidal.samplereviews.features.MainActivity
 import kotlinx.android.synthetic.main.fragment_reviews.*
 import timber.log.Timber

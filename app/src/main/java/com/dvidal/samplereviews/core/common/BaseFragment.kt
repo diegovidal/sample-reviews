@@ -7,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import com.dvidal.samplereviews.IMyApplication
-import com.dvidal.samplereviews.MyApplication
+import com.dvidal.samplereviews.BaseApplication
 
 /**
  * @author diegovidal on 2020-02-16.
  */
 abstract class BaseFragment: Fragment() {
 
-    internal val component by lazy { (activity?.application as IMyApplication).appComponent.activityComponent().build() }
+    internal val component by lazy { (activity?.application as BaseApplication).appComponent.activityComponent().build() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
