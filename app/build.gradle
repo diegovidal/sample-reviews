@@ -47,6 +47,7 @@ dependencies {
 
     // Android Dependencies
     implementation applicationDependencies.appCompat
+    implementation applicationDependencies.materialDesign
     implementation applicationDependencies.core
     implementation applicationDependencies.constraintLayout
     implementation applicationDependencies.recyclerView
