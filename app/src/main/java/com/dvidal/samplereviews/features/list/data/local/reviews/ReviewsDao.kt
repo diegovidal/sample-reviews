@@ -16,7 +16,7 @@ interface ReviewsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllReviews(listReviewsDto: List<ReviewDto>)
 
-    @Query("SELECT * FROM reviewdto")
+    @Query("SELECT * FROM reviewdto ORDER BY id DESC")
     fun fetchReviews(): LiveData<List<ReviewDto>>
 
     @Query("DELETE FROM reviewdto")

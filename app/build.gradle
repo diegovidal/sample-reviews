@@ -48,6 +48,7 @@ dependencies {
     // Android Dependencies
     implementation applicationDependencies.appCompat
     implementation applicationDependencies.materialDesign
+    implementation applicationDependencies.swipeRefreshLayout
     implementation applicationDependencies.core
     implementation applicationDependencies.constraintLayout
     implementation applicationDependencies.recyclerView
@@ -80,11 +81,10 @@ dependencies {
     androidTestImplementation integrationTestDependencies.mockk
     androidTestImplementation integrationTestDependencies.mockkAndroid
     androidTestImplementation integrationTestDependencies.espresso
+    androidTestImplementation integrationTestDependencies.testRules
     androidTestImplementation integrationTestDependencies.archCore
     androidTestImplementation applicationDependencies.dagger
 
     kaptAndroidTest applicationDependencies.daggerCompiler
     kaptAndroidTest applicationDependencies.daggerProcessor
-
-    androidTestImplementation "androidx.test:rules:1.3.0-alpha03"
 }

@@ -1,7 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/holo_blue_light">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/trip_activity_background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_alpha"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_trip_activity_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_activity_trip_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Title"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RatingBar
+            android:id="@+id/rb_activity_trip_rate"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.1"
+            tools:rating="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_activity_trip_title" />
+
+        <TextView
+            android:id="@+id/tv_activity_trip_rate_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            tools:text="4.7 / 5"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/rb_activity_trip_rate"
+            app:layout_constraintStart_toEndOf="@id/rb_activity_trip_rate"
+            app:layout_constraintTop_toBottomOf="@id/rb_activity_trip_rate" />
+
+        <TextView
+            android:id="@+id/tv_activity_trip_total_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            tools:text="( 1365 ratings )"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="@color/primary_light"
+            app:layout_constraintBottom_toTopOf="@+id/tv_activity_trip_rate_average"
+            app:layout_constraintStart_toEndOf="@+id/tv_activity_trip_rate_average"
+            app:layout_constraintTop_toBottomOf="@+id/tv_activity_trip_rate_average" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_trip_activity_loading"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

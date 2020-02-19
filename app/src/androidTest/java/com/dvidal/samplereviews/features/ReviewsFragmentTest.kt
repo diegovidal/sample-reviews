@@ -16,6 +16,7 @@ import com.dvidal.samplereviews.features.list.presentation.ReviewsViewContract
 import com.dvidal.samplereviews.features.list.presentation.ReviewsViewModel
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.android.synthetic.main.fragment_reviews.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -73,7 +74,7 @@ class ReviewsFragmentTest: BaseEspressoTest() {
             reviewsLiveEvents.postValue(ReviewsViewContract.ViewState.ReviewsLiveEvent.ReviewsPageLoading)
         }
 
-        onView(withId(R.id.pb_reviews)).check(matches(isDisplayed()))
+        onView(withId(R.id.srl_reviews)).check(matches(isDisplayed()))
     }
 
     @Test
