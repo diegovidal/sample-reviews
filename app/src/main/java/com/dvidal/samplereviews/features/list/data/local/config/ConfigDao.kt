@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.dvidal.samplereviews.core.datasource.remote.NetworkConstants
 
 /**
  * @author diegovidal on 2020-02-14.
@@ -22,7 +23,7 @@ interface ConfigDao {
     @Query("SELECT * FROM configdto WHERE -1 LIMIT 1")
     fun fetchConfigAsLiveData(): LiveData<ConfigDto?>
 
-    @Query("UPDATE configdto SET offsetPage = offsetPage + 1 WHERE id = -1")
+    @Query("UPDATE configdto SET offsetPage = offsetPage + ${NetworkConstants.LIMIT_REVIEWS} WHERE id = -1")
     suspend fun incrementOffsetPage()
 
     @Query("UPDATE configdto SET isDescendingOrderRating = NOT isDescendingOrderRating WHERE id = -1")

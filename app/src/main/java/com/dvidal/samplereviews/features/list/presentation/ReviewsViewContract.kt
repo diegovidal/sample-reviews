@@ -44,6 +44,7 @@ sealed class ReviewsViewContract {
         sealed class SingleLiveEvent : ViewState() {
 
             data class ErrorWarning(val throwable: Throwable) : SingleLiveEvent()
+            object ConfigurePagination : SingleLiveEvent()
             data class NavigateToReviewDetails(val reviewDetails: ReviewView) : SingleLiveEvent()
         }
     }

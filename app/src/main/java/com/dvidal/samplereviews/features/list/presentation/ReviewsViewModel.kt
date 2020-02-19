@@ -7,6 +7,7 @@ import com.dvidal.samplereviews.core.common.BaseCoroutineDispatcher
 import com.dvidal.samplereviews.core.common.BaseViewModel
 import com.dvidal.samplereviews.core.common.SingleLiveEvent
 import com.dvidal.samplereviews.core.common.UseCase
+import com.dvidal.samplereviews.features.details.ReviewDetailsViewContract
 import com.dvidal.samplereviews.features.list.domain.usecases.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,6 +29,12 @@ open class ReviewsViewModel @Inject constructor(
     @VisibleForTesting
     val userInteraction = SingleLiveEvent<ReviewsViewContract.UserInteraction>()
 
+    override val reviewsLiveEvents =
+        MediatorLiveData<ReviewsViewContract.ViewState.ReviewsLiveEvent>()
+
+    override val configLiveEvents =
+        MediatorLiveData<ReviewsViewContract.ViewState.ConfigLiveEvent>()
+
     override val singleLiveEvents =
         SingleLiveEvent<ReviewsViewContract.ViewState.SingleLiveEvent>().apply {
 
@@ -38,13 +45,12 @@ open class ReviewsViewModel @Inject constructor(
             addSource(userInteraction) {
                 handleUserInteraction(it)
             }
+
+            addSource(reviewsLiveEvents) {
+                if (it is ReviewsViewContract.ViewState.ReviewsLiveEvent.ReviewsPageScreen && it.list.isNotEmpty())
+                    postValue(ReviewsViewContract.ViewState.SingleLiveEvent.ConfigurePagination)
+            }
         }
-
-    override val reviewsLiveEvents =
-        MediatorLiveData<ReviewsViewContract.ViewState.ReviewsLiveEvent>()
-
-    override val configLiveEvents =
-        MediatorLiveData<ReviewsViewContract.ViewState.ConfigLiveEvent>()
 
     override fun invokeUserInteraction(userInteraction: ReviewsViewContract.UserInteraction) {
         this.userInteraction.postValue(userInteraction)

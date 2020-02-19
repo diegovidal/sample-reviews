@@ -2,8 +2,10 @@ package com.dvidal.samplereviews.core.navigator
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.features.details.ReviewDetailsFragment
+import com.dvidal.samplereviews.features.list.presentation.ReviewView
 import com.dvidal.samplereviews.features.list.presentation.ReviewsFragment
 import javax.inject.Inject
 
@@ -16,7 +18,7 @@ class Navigator @Inject constructor() {
 
         when(bundle?.getString(FRAGMENT_TYPE)) {
 
-            ReviewDetailsFragment.REVIEW_DETAILS_FRAGMENT -> navigateToReviewDetailsFragment(activity)
+            ReviewDetailsFragment.REVIEW_DETAILS_FRAGMENT -> navigateToReviewDetailsFragment(activity, null)
             ReviewsFragment.REVIEWS_FRAGMENT -> navigateToReviewsFragment(activity)
             else -> navigateToReviewsFragment(activity)
         }
@@ -29,12 +31,12 @@ class Navigator @Inject constructor() {
             .commit()
     }
 
-    fun navigateToReviewDetailsFragment(activity: AppCompatActivity) {
+    fun navigateToReviewDetailsFragment(activity: FragmentActivity?, reviewView: ReviewView?) {
 
-        activity.supportFragmentManager.beginTransaction()
-            .replace(R.id.frame_content, ReviewDetailsFragment.newInstance())
-            .addToBackStack(ReviewDetailsFragment.REVIEW_DETAILS_FRAGMENT)
-            .commit()
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.frame_content, ReviewDetailsFragment.newInstance(reviewView))
+            ?.addToBackStack(ReviewDetailsFragment.REVIEW_DETAILS_FRAGMENT)
+            ?.commit()
     }
 
     companion object {

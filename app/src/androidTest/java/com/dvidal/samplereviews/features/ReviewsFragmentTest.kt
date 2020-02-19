@@ -1,4 +1,4 @@
-package com.dvidal.samplereviews
+package com.dvidal.samplereviews.features
 
 import android.content.Intent
 import androidx.lifecycle.MediatorLiveData
@@ -8,12 +8,16 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.dvidal.samplereviews.BaseEspressoTest
+import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.core.common.SingleLiveEvent
-import com.dvidal.samplereviews.features.MainActivity
+import com.dvidal.samplereviews.features.list.presentation.ReviewView
 import com.dvidal.samplereviews.features.list.presentation.ReviewsViewContract
 import com.dvidal.samplereviews.features.list.presentation.ReviewsViewModel
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +29,7 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest: BaseEspressoTest() {
+class ReviewsFragmentTest: BaseEspressoTest() {
 
     @get:Rule
     val activityRule = ActivityTestRule(MainActivity::class.java, true, false)
@@ -48,10 +52,41 @@ class ExampleInstrumentedTest: BaseEspressoTest() {
     }
 
     @Test
-    fun useAppContext() {
+    fun whenReviewsLiveEvent_andReviewsPageScreen_shouldShowContentPage() {
 
         activityRule.launchActivity(Intent())
 
-        onView(withId(R.id.bt_load)).check(matches(isDisplayed()))
+        runBlocking(Dispatchers.Main) {
+            reviewsLiveEvents.postValue(ReviewsViewContract.ViewState.ReviewsLiveEvent.ReviewsPageScreen(
+                emptyList()))
+        }
+
+        onView(withId(R.id.container_reviews_content)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun whenReviewsLiveEvent_andReviewsPageLoading_shouldShowProgressBar() {
+
+        activityRule.launchActivity(Intent())
+
+        runBlocking(Dispatchers.Main) {
+            reviewsLiveEvents.postValue(ReviewsViewContract.ViewState.ReviewsLiveEvent.ReviewsPageLoading)
+        }
+
+        onView(withId(R.id.pb_reviews)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun whenNavigateToReviewDetails_shouldShowReviewDetailsFragment() {
+
+        activityRule.launchActivity(Intent())
+
+        runBlocking(Dispatchers.Main) {
+            singleLiveEvents.postValue(ReviewsViewContract.ViewState.SingleLiveEvent.NavigateToReviewDetails(
+                ReviewView.empty()
+            ))
+        }
+
+        onView(withId(R.id.container_review_details_content)).check(matches(isDisplayed()))
     }
 }

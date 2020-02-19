@@ -72,7 +72,7 @@ class ConfigDaoTest {
     }
 
     @Test
-    fun `when add and increment two times offsetPage should return 2`() = runBlocking {
+    fun `when add and increment two times offsetPage should return 10`() = runBlocking {
 
         val dummyConfigDto = ConfigDto()
 
@@ -81,7 +81,7 @@ class ConfigDaoTest {
         assertEquals(0, configDto.getOrAwaitValue()?.offsetPage)
 
         repeat(2) {appDatabase.configDao().incrementOffsetPage()}
-        assertEquals(2, configDto.getOrAwaitValue()?.offsetPage)
+        assertEquals(10, configDto.getOrAwaitValue()?.offsetPage)
     }
 
     @Test
