@@ -40,6 +40,8 @@ class ReviewDetailsFragment: BaseFragment() {
     override fun onResume() {
         super.onResume()
         (activity as? MainActivity)?.updateActionBarTitle(R.string.review_details_title)
+        (activity as? MainActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as? MainActivity)?.supportActionBar?.elevation = 4f
     }
 
     private fun renderReviewDetailsLiveEvents(viewState: ReviewDetailsViewContract.ViewState) {

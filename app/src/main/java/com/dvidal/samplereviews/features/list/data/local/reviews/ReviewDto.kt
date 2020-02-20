@@ -26,6 +26,7 @@ data class ReviewDto(
 ) {
 
     fun mapperToReviewView() = ReviewView(
+        id = this.id,
         author = AuthorView(
             fullName = this.authorName,
             country = this.authorCountry,

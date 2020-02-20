@@ -31,7 +31,7 @@ data class ReviewsPageView(
 
 @Parcelize
 data class ReviewView(
-
+    val id: Long,
     val author: AuthorView,
     val title: String,
     val message: String,
@@ -45,6 +45,7 @@ data class ReviewView(
     companion object {
 
         fun empty() = ReviewView(
+            id = -1,
             author = AuthorView.empty(),
             title = "",
             message = "",

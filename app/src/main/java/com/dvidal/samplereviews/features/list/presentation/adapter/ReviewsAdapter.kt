@@ -15,14 +15,31 @@ class ReviewsAdapter @Inject constructor(): RecyclerView.Adapter<ReviewViewHolde
     private var dataSet = emptyList<ReviewView>()
     private var listener: ReviewViewHolder.ReviewViewHolderListener? = null
 
+    private var isDescendingOrderRating = true
+
     fun configureListener(listener: ReviewViewHolder.ReviewViewHolderListener) {
         this.listener = listener
     }
 
+    fun updateIsDescendingOrderRating(isDesc: Boolean) {
+
+        this.isDescendingOrderRating = isDesc
+        updateDataSet(dataSet)
+    }
+
     fun updateDataSet(list: List<ReviewView>) {
 
-        this.dataSet = list
+        val listOrd = sortByRating(list)
+        this.dataSet = listOrd
         notifyDataSetChanged()
+    }
+
+    private fun sortByRating(list: List<ReviewView>): List<ReviewView> {
+
+        return if (isDescendingOrderRating)
+            list.sortedByDescending { it.rating }
+        else
+            list.sortedBy { it.rating }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {

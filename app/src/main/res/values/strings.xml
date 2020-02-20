@@ -2,7 +2,7 @@
     <string name="app_name">SampleReviews</string>
     <string name="review_details_title">Review Details</string>
     <string name="reviews_title">Reviews</string>
-    <string name="label_reviewed_by">Reviewed by</string>
+    <string name="label_reviewed_by">reviewed by</string>
     <string name="text_lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic</string>
     <string name="content_description_author_photo">Author Photo</string>
 

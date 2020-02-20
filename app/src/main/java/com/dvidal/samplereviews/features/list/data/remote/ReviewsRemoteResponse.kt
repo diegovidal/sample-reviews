@@ -61,6 +61,7 @@ data class ReviewRemote(
 ) {
 
     fun mapperToReviewView() = ReviewView(
+        id = this.id,
         author = this.author.mapperToAuthorView(),
         title = this.title,
         message = this.message,

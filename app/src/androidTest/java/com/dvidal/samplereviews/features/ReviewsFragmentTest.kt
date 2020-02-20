@@ -62,7 +62,7 @@ class ReviewsFragmentTest: BaseEspressoTest() {
                 emptyList()))
         }
 
-        onView(withId(R.id.container_reviews_content)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_reviews)).check(matches(isDisplayed()))
     }
 
     @Test

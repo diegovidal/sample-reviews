@@ -3,6 +3,7 @@ package com.dvidal.samplereviews.features.list.presentation
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +16,7 @@ import com.dvidal.samplereviews.features.MainActivity
 import com.dvidal.samplereviews.features.list.presentation.adapter.ReviewViewHolder
 import com.dvidal.samplereviews.features.list.presentation.adapter.ReviewsAdapter
 import kotlinx.android.synthetic.main.fragment_reviews.*
+import kotlinx.android.synthetic.main.view_sort_by_rating.*
 import kotlinx.android.synthetic.main.view_trip_activity_information.*
 import javax.inject.Inject
 
@@ -51,6 +53,8 @@ class ReviewsFragment: BaseFragment(), ReviewViewHolder.ReviewViewHolderListener
     override fun onResume() {
         super.onResume()
         (activity as? MainActivity)?.updateActionBarTitle(R.string.reviews_title)
+        (activity as? MainActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (activity as? MainActivity)?.supportActionBar?.elevation = 0f
     }
 
     private fun renderReviewsLiveEvents(reviewsLiveEvent: ReviewsViewContract.ViewState.ReviewsLiveEvent) {
@@ -75,6 +79,8 @@ class ReviewsFragment: BaseFragment(), ReviewViewHolder.ReviewViewHolderListener
                 tv_activity_trip_total_reviews.text = getString(R.string.label_activity_trip_total_reviews, configLiveEvent.config.numReviews)
                 rb_activity_trip_rate.rating = configLiveEvent.config.averageRating.toFloat()
                 shouldShowActivityTripContentPage(true)
+
+                configureSortByRating(configLiveEvent.config.isDescendingOrderRating)
             }
             ReviewsViewContract.ViewState.ConfigLiveEvent.ConfigPageLoading -> shouldShowActivityTripContentPage(false)
         }
@@ -93,7 +99,7 @@ class ReviewsFragment: BaseFragment(), ReviewViewHolder.ReviewViewHolderListener
 
     private fun shouldShowReviewsContentPage(isVisible: Boolean) {
 
-        container_reviews_content.isVisible = isVisible
+        rv_reviews.isVisible = isVisible
         srl_reviews.isRefreshing = !isVisible
     }
 
@@ -127,6 +133,17 @@ class ReviewsFragment: BaseFragment(), ReviewViewHolder.ReviewViewHolderListener
                     viewModel.invokeUserInteraction(ReviewsViewContract.UserInteraction.RequestReviewsEvent)
                 }
             }
+
+        container_sort_by_rating.setOnClickListener { viewModel.invokeUserInteraction(ReviewsViewContract.UserInteraction.ToggleSortByRatingEvent) }
+    }
+
+    private fun configureSortByRating(isDesc: Boolean) {
+
+        reviewsAdapter.updateIsDescendingOrderRating(isDesc)
+        iv_sort_by_rating.setImageDrawable(
+            if (isDesc) ContextCompat.getDrawable(requireContext(), R.drawable.ic_keyboard_arrow_down)
+            else ContextCompat.getDrawable(requireContext(), R.drawable.ic_keyboard_arrow_up)
+        )
     }
 
     companion object {
