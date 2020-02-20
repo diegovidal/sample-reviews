@@ -5,11 +5,14 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.core.common.BaseFragment
 import com.dvidal.samplereviews.core.di.module.viewmodel.ViewModelFactory
 import com.dvidal.samplereviews.features.MainActivity
 import com.dvidal.samplereviews.features.list.presentation.ReviewView
+import kotlinx.android.synthetic.main.fragment_review_details.*
 import javax.inject.Inject
 
 /**
@@ -21,7 +24,7 @@ class ReviewDetailsFragment: BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: ReviewDetailsViewContract.ViewModel by lazy {
-        ViewModelProviders.of(this).get(ReviewDetailsViewModel::class.java)
+        ViewModelProviders.of(this, viewModelFactory).get(ReviewDetailsViewModel::class.java)
     }
 
     override fun layoutRes() = R.layout.fragment_review_details
@@ -30,11 +33,11 @@ class ReviewDetailsFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        arguments?.getParcelable<ReviewView>(REVIEW_VIEW_EXTRA)?.let {
-//            viewModel.invokeUserInteraction(ReviewDetailsViewContract.UserInteraction.InitPageEvent(it))
-//        }
-//
-//        viewModel.reviewsLiveEvents.observe(viewLifecycleOwner, Observer (::renderReviewDetailsLiveEvents))
+        arguments?.getParcelable<ReviewView>(REVIEW_VIEW_EXTRA)?.let {
+            viewModel.invokeUserInteraction(ReviewDetailsViewContract.UserInteraction.InitPageEvent(it))
+        }
+
+        viewModel.reviewsLiveEvents.observe(viewLifecycleOwner, Observer (::renderReviewDetailsLiveEvents))
     }
 
     override fun onResume() {
@@ -48,6 +51,21 @@ class ReviewDetailsFragment: BaseFragment() {
         if (viewState is ReviewDetailsViewContract.ViewState.ReviewDetailsPageScreen){
 
             val reviewView = viewState.reviewView
+            val city = if (reviewView.author.city.isNotBlank()) ", ${reviewView.author.city}" else ""
+
+            Glide.with(requireContext())
+                .load(reviewView.author.photo)
+                .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.author_photo_placeholder)
+                .into(iv_author_photo)
+
+            tv_review_date.text = reviewView.created
+            tv_author_name.text = reviewView.author.fullName
+            tv_country.text = getString(R.string.label_country_city, reviewView.author.country, city)
+            rb_activity_trip_rate.rating = reviewView.rating.toFloat()
+            tv_title_message.text = if (reviewView.title.isNotBlank()) reviewView.title else getString(R.string.label_no_title)
+            tv_review_message.text = reviewView.message
+            tv_enjoyment.text = reviewView.enjoyment
         }
     }
 

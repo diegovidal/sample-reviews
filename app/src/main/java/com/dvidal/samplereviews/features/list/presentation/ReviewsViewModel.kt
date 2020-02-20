@@ -66,8 +66,9 @@ open class ReviewsViewModel @Inject constructor(
                     viewModelScope.launch(Dispatchers.Main) {
                         addSource(liveData) { list ->
 
-                            val listConverted = list.map { it.mapperToReviewView() }
-                            postValue(ReviewsViewContract.ViewState.ReviewsLiveEvent.ReviewsPageScreen(listConverted))
+                            val listConverted = list.map {reviewDto -> reviewDto.mapperToReviewView() }
+                            if (listConverted.isNotEmpty())
+                                postValue(ReviewsViewContract.ViewState.ReviewsLiveEvent.ReviewsPageScreen(listConverted))
                         }
                     }
                 }

@@ -2,6 +2,7 @@ package com.dvidal.samplereviews.features.list.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.features.list.presentation.ReviewView
@@ -30,8 +31,10 @@ class ReviewsAdapter @Inject constructor(): RecyclerView.Adapter<ReviewViewHolde
     fun updateDataSet(list: List<ReviewView>) {
 
         val listOrd = sortByRating(list)
+
+        val diffResultComplete = DiffUtil.calculateDiff(ReviewsDiffCallback(this.dataSet, listOrd))
+        diffResultComplete.dispatchUpdatesTo(this)
         this.dataSet = listOrd
-        notifyDataSetChanged()
     }
 
     private fun sortByRating(list: List<ReviewView>): List<ReviewView> {

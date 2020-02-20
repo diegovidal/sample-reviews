@@ -10,4 +10,6 @@
     <string name="label_activity_trip_total_reviews">( %1$d reviews )</string>
 
     <string name="label_sort_by_rating">Sort by: Rating</string>
+    <string name="label_country_city">%1$s%2$s</string>
+    <string name="label_no_title">No Title</string>
 </resources>
