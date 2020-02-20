@@ -22,7 +22,7 @@ abstract class BaseRequester(
     private suspend fun <T, R> requestHttp(apiCall: suspend() -> T, transform: (T) -> R, default: T): EitherResult<R> {
         return try {
             val response = apiCall.invoke()
-            Timber.e("response: $response")
+            Timber.e("Response: $response")
             EitherResult.right(transform((response ?: default)))
         } catch (exception: Throwable) {
             Timber.e("Error: $exception")

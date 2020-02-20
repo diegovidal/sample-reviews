@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dvidal.samplereviews.R
+import com.dvidal.samplereviews.core.extension.dateToRead
 import com.dvidal.samplereviews.features.list.presentation.ReviewView
 import kotlinx.android.synthetic.main.recycler_item_review.view.*
 
@@ -35,7 +36,7 @@ class ReviewViewHolder(
 
         view.tv_author_name.text = reviewView.author.fullName
         view.rb_activity_trip_rate.rating = reviewView.rating.toFloat()
-        view.tv_review_date.text = reviewView.created
+        view.tv_review_date.text = reviewView.created.dateToRead() ?: reviewView.created
         view.tv_review_message.text = reviewView.message
     }
 

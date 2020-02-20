@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.core.common.BaseFragment
 import com.dvidal.samplereviews.core.di.module.viewmodel.ViewModelFactory
+import com.dvidal.samplereviews.core.extension.dateToRead
 import com.dvidal.samplereviews.features.MainActivity
 import com.dvidal.samplereviews.features.list.presentation.ReviewView
 import kotlinx.android.synthetic.main.fragment_review_details.*
@@ -59,7 +60,7 @@ class ReviewDetailsFragment: BaseFragment() {
                 .placeholder(R.drawable.author_photo_placeholder)
                 .into(iv_author_photo)
 
-            tv_review_date.text = reviewView.created
+            tv_review_date.text = reviewView.created.dateToRead() ?: reviewView.created
             tv_author_name.text = reviewView.author.fullName
             tv_country.text = getString(R.string.label_country_city, reviewView.author.country, city)
             rb_activity_trip_rate.rating = reviewView.rating.toFloat()
