@@ -57,6 +57,14 @@ class ReviewsFragmentTest : BaseEspressoTest() {
     }
 
     @Test
+    fun whenShowReviewsFragment_shouldCallInitPageEvent() {
+
+        activityRule.launchActivity(Intent())
+
+        verify(exactly = 1) { reviewsViewModel.invokeUserInteraction(ReviewsViewContract.UserInteraction.InitPageEvent) }
+    }
+
+    @Test
     fun whenReviewsLiveEvent_andReviewsPageScreen_shouldShowContentPage() {
 
         activityRule.launchActivity(Intent())
@@ -245,6 +253,6 @@ class ReviewsFragmentTest : BaseEspressoTest() {
             )
         } just Runs
 
-        every { reviewDetailsViewModel.reviewsLiveEvents } returns MediatorLiveData()
+        every { reviewDetailsViewModel.reviewDetailsLiveEvents } returns MediatorLiveData()
     }
 }

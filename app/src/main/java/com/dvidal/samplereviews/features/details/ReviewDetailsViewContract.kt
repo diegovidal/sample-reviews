@@ -10,7 +10,7 @@ sealed class ReviewDetailsViewContract {
 
     interface ViewModel {
 
-        val reviewsLiveEvents: MediatorLiveData<ViewState>
+        val reviewDetailsLiveEvents: MediatorLiveData<ViewState>
         fun invokeUserInteraction(userInteraction: UserInteraction)
     }
 

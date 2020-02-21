@@ -32,7 +32,7 @@ data class ReviewsPageView(
 @Parcelize
 data class ReviewView(
     val id: Long,
-    val author: AuthorView,
+    var author: AuthorView,
     val title: String,
     var message: String,
     val enjoyment: String,
@@ -61,7 +61,7 @@ data class ReviewView(
 @Parcelize
 data class AuthorView(
 
-    val fullName: String,
+    var fullName: String,
     val country: String,
     val city: String,
     val photo: String

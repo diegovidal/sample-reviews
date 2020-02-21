@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.core.common.BaseFragment
-import com.dvidal.samplereviews.core.di.module.viewmodel.ViewModelFactory
 import com.dvidal.samplereviews.core.extension.dateToRead
 import com.dvidal.samplereviews.features.MainActivity
 import com.dvidal.samplereviews.features.list.presentation.ReviewView
@@ -38,7 +37,7 @@ class ReviewDetailsFragment: BaseFragment() {
             viewModel.invokeUserInteraction(ReviewDetailsViewContract.UserInteraction.InitPageEvent(it))
         }
 
-        viewModel.reviewsLiveEvents.observe(viewLifecycleOwner, Observer (::renderReviewDetailsLiveEvents))
+        viewModel.reviewDetailsLiveEvents.observe(viewLifecycleOwner, Observer (::renderReviewDetailsLiveEvents))
     }
 
     override fun onResume() {
@@ -73,7 +72,7 @@ class ReviewDetailsFragment: BaseFragment() {
     companion object {
 
         const val REVIEW_DETAILS_FRAGMENT = "REVIEW_DETAILS_FRAGMENT"
-        private const val REVIEW_VIEW_EXTRA = "REVIEW_VIEW_EXTRA"
+        const val REVIEW_VIEW_EXTRA = "REVIEW_VIEW_EXTRA"
 
         fun newInstance(reviewView: ReviewView?) = ReviewDetailsFragment().apply {
 

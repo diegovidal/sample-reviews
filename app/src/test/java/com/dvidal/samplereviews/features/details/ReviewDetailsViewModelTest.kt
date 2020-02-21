@@ -35,6 +35,6 @@ class ReviewDetailsViewModelTest {
         viewModel.invokeUserInteraction(ReviewDetailsViewContract.UserInteraction.InitPageEvent(dummyReviewView))
 
         val expected = ReviewDetailsViewContract.ViewState.ReviewDetailsPageScreen(dummyReviewView)
-        assertEquals(expected, viewModel.reviewsLiveEvents.getOrAwaitValue())
+        assertEquals(expected, viewModel.reviewDetailsLiveEvents.getOrAwaitValue())
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.dvidal.samplereviews.R
 import com.dvidal.samplereviews.features.details.ReviewDetailsFragment
+import com.dvidal.samplereviews.features.details.ReviewDetailsFragment.Companion.REVIEW_VIEW_EXTRA
 import com.dvidal.samplereviews.features.list.presentation.ReviewView
 import com.dvidal.samplereviews.features.list.presentation.ReviewsFragment
 import javax.inject.Inject
@@ -18,7 +19,10 @@ class Navigator @Inject constructor() {
 
         when(bundle?.getString(FRAGMENT_TYPE)) {
 
-            ReviewDetailsFragment.REVIEW_DETAILS_FRAGMENT -> navigateToReviewDetailsFragment(activity, null)
+            ReviewDetailsFragment.REVIEW_DETAILS_FRAGMENT -> {
+                val reviewView = bundle.getParcelable(REVIEW_VIEW_EXTRA) as? ReviewView
+                navigateToReviewDetailsFragment(activity, reviewView)
+            }
             ReviewsFragment.REVIEWS_FRAGMENT -> navigateToReviewsFragment(activity)
             else -> navigateToReviewsFragment(activity)
         }

@@ -13,13 +13,13 @@ open class ReviewDetailsViewModel @Inject constructor(
     private val dispatcher: BaseCoroutineDispatcher
 ) : BaseViewModel(), ReviewDetailsViewContract.ViewModel {
 
-    override val reviewsLiveEvents = MediatorLiveData<ReviewDetailsViewContract.ViewState>()
+    override val reviewDetailsLiveEvents = MediatorLiveData<ReviewDetailsViewContract.ViewState>()
 
     override fun invokeUserInteraction(userInteraction: ReviewDetailsViewContract.UserInteraction) {
 
-        reviewsLiveEvents.notLet {
+        reviewDetailsLiveEvents.notLet {
             if (userInteraction is ReviewDetailsViewContract.UserInteraction.InitPageEvent) {
-                reviewsLiveEvents.postValue(
+                reviewDetailsLiveEvents.postValue(
                     ReviewDetailsViewContract.ViewState.ReviewDetailsPageScreen(
                         userInteraction.reviewView
                     )
