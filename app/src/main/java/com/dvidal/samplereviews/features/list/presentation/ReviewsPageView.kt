@@ -34,7 +34,7 @@ data class ReviewView(
     val id: Long,
     val author: AuthorView,
     val title: String,
-    val message: String,
+    var message: String,
     val enjoyment: String,
     val isAnonymous: Boolean,
     val rating: Int,

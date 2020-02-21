@@ -33,6 +33,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
 }
 
 dependencies {
@@ -81,9 +85,12 @@ dependencies {
     androidTestImplementation integrationTestDependencies.mockk
     androidTestImplementation integrationTestDependencies.mockkAndroid
     androidTestImplementation integrationTestDependencies.espresso
+    androidTestImplementation integrationTestDependencies.espressoContrib
     androidTestImplementation integrationTestDependencies.testRules
     androidTestImplementation integrationTestDependencies.archCore
     androidTestImplementation applicationDependencies.dagger
+
+    androidTestUtil integrationTestDependencies.orchestrator
 
     kaptAndroidTest applicationDependencies.daggerCompiler
     kaptAndroidTest applicationDependencies.daggerProcessor

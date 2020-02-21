@@ -81,6 +81,7 @@
         android:id="@+id/pb_trip_activity_loading"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

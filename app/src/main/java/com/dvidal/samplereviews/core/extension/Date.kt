@@ -1,5 +1,6 @@
 package com.dvidal.samplereviews.core.extension
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,8 +13,12 @@ fun String.dateToRead(): String? {
     val formatNetworkDate = SimpleDateFormat(FORMAT_NETWORK_DATE, Locale.getDefault())
     val formatDateForRead = SimpleDateFormat(FORMAT_DATE_FOR_READ, Locale.getDefault())
 
-    return formatNetworkDate.parse(this)?.let { networkDate ->
-        formatDateForRead.format(networkDate)
+    return try {
+        formatNetworkDate.parse(this)?.let { networkDate ->
+            formatDateForRead.format(networkDate)
+        }
+    } catch (e: ParseException) {
+        this
     }
 }
 

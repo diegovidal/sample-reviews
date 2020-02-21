@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * @author diegovidal on 2020-02-16.
  */
-class ReviewDetailsViewModel @Inject constructor(
+open class ReviewDetailsViewModel @Inject constructor(
     private val dispatcher: BaseCoroutineDispatcher
 ) : BaseViewModel(), ReviewDetailsViewContract.ViewModel {
 
